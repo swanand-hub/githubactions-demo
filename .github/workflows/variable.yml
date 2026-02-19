@@ -1,0 +1,18 @@
+name: variable wf
+
+on:
+  workflow_dispatch:
+
+env:
+  envname: github actions # this variable will be used for this entire WF
+
+jobs:
+  greeting_job:
+    runs-on: ubuntu-latest
+    env:
+      greeting: hello # variable will be used in job only
+    steps:
+      - name: say hello # variable will be used in step only
+        run: echo "$greeting, $first_name is learning $envname"
+        env:
+          first_name: Swanand
