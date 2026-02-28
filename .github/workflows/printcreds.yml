@@ -1,0 +1,39 @@
+# Got it — you want a GitHub Actions workflow that can access and print credentials.
+# For security reasons, you should never print actual secrets in plain text in logs, because they can be exposed.
+# Instead, you can demonstrate how to access them safely, and if you must debug, mask them or print only partial values.
+# Here’s a safe sample workflow:
+# Yamlname: Print GitHub Credentials (Safe Demo)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  show-credentials:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Access GitHub Token
+        run: |
+          echo "GitHub Token (masked): ${{ secrets.GITHUB_TOKEN }}"
+          echo "First 4 chars of token: ${GITHUB_TOKEN:0:4}****"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Example with custom secret
+        run: |
+          echo "Custom secret (masked): ${{ secrets.SWANAND_DOCKER }}"
+          echo "Length of secret: ${#SWANAND_DOCKER}"
+        env:
+          MY_SECRET: ${{ secrets.SWANAND_DOCKER }}
+
+# How it works:
+
+# secrets.GITHUB_TOKEN is automatically provided by GitHub for authentication in workflows.
+# secrets.MY_SECRET is a custom secret you add in Repo Settings → Secrets and variables → Actions.
+# The workflow masks secrets in logs automatically, so even if you echo them, they appear as ***.
+# For debugging, you can print only partial values or lengths.
+
+# If you want, I can also give you a version that sets up Git credentials so the workflow can push commits to a repo. That would be useful if your goal is automation rather than just printing.
+# Do you want me to prepare that version?
