@@ -24,7 +24,8 @@ jobs:
       - name: Example with custom secret
         run: |
           echo "Custom secret (masked): ${{ secrets.SWANAND_DOCKER }}"
-          echo "Length of secret: ${#SWANAND_DOCKER}"
+          echo "Length of secret: ${#MY_SECRET}"
+          echo "docker secret: ${MY_SECRET}"
         env:
           MY_SECRET: ${{ secrets.SWANAND_DOCKER }}
 
